@@ -16,6 +16,7 @@ class CreateMataPelajaransTable extends Migration
         Schema::create('mata_pelajarans', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nama_matpel', 50);
+            $table->integer('kkm');
             $table->timestamps();
         });
     }

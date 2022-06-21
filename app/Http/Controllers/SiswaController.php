@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Peserta;
 use App\Siswa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -57,7 +58,14 @@ class SiswaController extends Controller
      */
     public function show($id)
     {
-        //
+        $title = 'Detail Ujian';
+        $data_peserta = Peserta::where('id_siswa', $id)->get();
+        $siswa = Siswa::findorfail($id);
+        return view('siswa.show', compact(
+            'title',
+            'data_peserta',
+            'siswa'
+        ));
     }
 
     /**
@@ -96,7 +104,7 @@ class SiswaController extends Controller
     public function destroy($id)
     {
         try {
-    $siswa = Siswa::findorfail($id);
+            $siswa = Siswa::findorfail($id);
             $siswa->delete();
             return back()->with('toast_success', 'Berhasil dihapus.');
         } catch (\Exception $e) {

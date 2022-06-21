@@ -12,6 +12,13 @@ class Ujian extends Model
         'tanggal'
     ];
 
+    public function scopeFilter($query, array $filters)
+    {
+        $query->when($filters['date_filter'] ?? false, function ($query, $date_filter) {
+            return $query->whereDate('tanggal', '=', $date_filter);
+        });
+    }
+
     public function mata_pelajaran()
     {
         return $this->belongsTo('App\MataPelajaran', 'id_matpel');
@@ -19,6 +26,6 @@ class Ujian extends Model
 
     public function peserta()
     {
-        return $this->hasMany('App\Peserta');
+        return $this->hasMany('App\Peserta', 'id_ujian');
     }
 }

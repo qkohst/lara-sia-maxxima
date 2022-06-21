@@ -90,8 +90,9 @@
                                     </td>
 
                                     <td class="align-middle ms-auto text-center">
-                                        <a class="btn btn-link text-dark px-3 mb-0" data-bs-toggle="modal" data-bs-target="#modalEdit{{$siswa->id}}">Edit</a>
-                                        <a href="#" class="btn btn-link text-danger text-gradient px-2 mb-0 btn-delete" title="Hapus" data-id="{{$siswa->id}}">
+                                        <a href="{{ route('siswa.show', $siswa->id) }}" target="_black" class="btn btn-link text-primary px-1 mb-0">Detail Ujian</a>
+                                        <a class="btn btn-link text-dark px-1 mb-0" data-bs-toggle="modal" data-bs-target="#modalEdit{{$siswa->id}}">Edit</a>
+                                        <a href="#" class="btn btn-link text-danger text-gradient px-1 mb-0 btn-delete" title="Hapus" data-id="{{$siswa->id}}">
                                             <form action="{{ route('siswa.destroy', $siswa->id) }}" method="post" id="delete{{$siswa->id}}">
                                                 @csrf
                                                 @method('delete')

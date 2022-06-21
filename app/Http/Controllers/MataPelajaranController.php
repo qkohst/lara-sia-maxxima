@@ -33,12 +33,14 @@ class MataPelajaranController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'nama_matpel' => 'required|min:2|max:50',
+            'kkm' => 'required|integer|between:1,100',
         ]);
         if ($validator->fails()) {
             return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
         } else {
             $matpel = new MataPelajaran([
                 'nama_matpel' => $request->nama_matpel,
+                'kkm' => $request->kkm,
             ]);
             $matpel->save();
             return back()->with('toast_success', 'Berhasil disimpan.');
@@ -68,6 +70,7 @@ class MataPelajaranController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'nama_matpel' => 'required|min:2|max:50',
+            'kkm' => 'required|integer|between:1,100',
         ]);
         if ($validator->fails()) {
             return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
@@ -76,6 +79,7 @@ class MataPelajaranController extends Controller
             $matpel = MataPelajaran::findorfail($id);
             $data = [
                 'nama_matpel' => $request->nama_matpel,
+                'kkm' => $request->kkm,
             ];
             $matpel->update($data);
             return back()->with('toast_success', 'Berhasil diedit.');

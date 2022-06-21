@@ -29,6 +29,12 @@
                                                         <input type="text" class="form-control" name="nama_matpel" required>
                                                     </div>
                                                 </div>
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label for="example-text-input" class="form-control-label">KKM</label>
+                                                        <input type="number" class="form-control" name="kkm" required>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="modal-footer">
@@ -52,6 +58,7 @@
                                 <tr>
                                     <th class="text-uppercase text-dark text-xxs font-weight-bolder opacity-7 text-center">No</th>
                                     <th class="text-uppercase text-dark text-xxs font-weight-bolder opacity-7 ps-2">Nama Mata Pelajaran</th>
+                                    <th class="text-uppercase text-dark text-xxs font-weight-bolder opacity-7 ps-2">KKM</th>
                                     <th class="text-dark opacity-7"></th>
                                 </tr>
                             </thead>
@@ -65,6 +72,9 @@
                                     </td>
                                     <td>
                                         <p class="text-sm mb-0">{{$matpel->nama_matpel}}</p>
+                                    </td>
+                                    <td>
+                                        <p class="text-sm mb-0">{{$matpel->kkm}}</p>
                                     </td>
 
                                     <td class="align-middle ms-auto text-center">
@@ -95,7 +105,11 @@
                                                         <label for="example-text-input" class="form-control-label">Nama Mata Pelajaran</label>
                                                         <input class="form-control" type="text" name="nama_matpel" value="{{$matpel->nama_matpel}}">
                                                     </div>
-                                                
+                                                    <div class="form-group">
+                                                        <label for="example-text-input" class="form-control-label">KKM</label>
+                                                        <input class="form-control" type="number" name="kkm" value="{{$matpel->kkm}}">
+                                                    </div>
+
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>

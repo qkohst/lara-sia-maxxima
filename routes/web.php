@@ -17,7 +17,7 @@ Route::get('/', 'SiswaController@index')->name('home');
 
 Route::resource('/siswa', 'SiswaController',  [
     'names' => 'siswa',
-    'uses' => ['index', 'store', 'update', 'destroy']
+    'uses' => ['index', 'store', 'show', 'update', 'destroy']
 ]);
 
 Route::resource('/matpel', 'MataPelajaranController',  [
@@ -26,5 +26,10 @@ Route::resource('/matpel', 'MataPelajaranController',  [
 ]);
 Route::resource('/ujian', 'UjianController',  [
     'names' => 'ujian',
+    'uses' => ['index', 'store', 'destroy']
+]);
+
+Route::resource('/ujian/{id}/peserta', 'PesertaUjianController',  [
+    'names' => 'peserta-ujian',
     'uses' => ['index', 'store', 'destroy']
 ]);

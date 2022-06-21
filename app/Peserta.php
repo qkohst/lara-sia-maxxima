@@ -8,7 +8,7 @@ class Peserta extends Model
 {
     protected $fillable = [
         'id_ujian',
-        'peserta',
+        'id_siswa',
         'nilai'
     ];
 
@@ -19,6 +19,6 @@ class Peserta extends Model
 
     public function siswa()
     {
-        return $this->belongsTo('App\Siswa', 'peserta');
+        return $this->belongsTo('App\Siswa', 'id_siswa');
     }
 }

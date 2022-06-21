@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class MataPelajaran extends Model
 {
     protected $fillable = [
-        'nama_matpel'
+        'nama_matpel',
+        'kkm'
     ];
 
     public function ujian()

@@ -2,28 +2,13 @@
 @section('content')
 <div class="container-fluid py-4">
     <div class="row">
-        <div class="col-md-6 mb-4">
-            <div class="card">
-                <div class="card-body p-3">
-                    <form action="{{ route('ujian.index') }}">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="example-text-input" class="form-control-label">Filter Berdasarkan Tanggal</label>
-                                    <input type="date" class="form-control" name="date_filter" value="{{request('date_filter')}}" onchange="this.form.submit()">
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
         <div class="col-12">
             <div class="card mb-4">
                 <div class="card-header pb-0">
                     <div class="row">
-                        <div class="col-6 d-flex align-items-center">
+                        <div class="col-6 align-items-center">
                             <h6 class="text-uppercase mb-0">Data {{$title}}</h6>
+                            <p class="text-sm texf-secondary">{{$ujian->nama_ujian}} {{$ujian->mata_pelajaran->nama_matpel}}</p>
                         </div>
                         <div class="col-6 text-end">
                             <a class="btn bg-gradient-primary mb-0" data-bs-toggle="modal" data-bs-target="#modalTambah"><i class="icofont-plus me-2"></i>Tambah</a>
@@ -35,33 +20,29 @@
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="exampleModalLabel">Tambah {{$title}}</h5>
                                     </div>
-                                    <form action="{{ route('ujian.store') }}" method="post">
+                                    <form action="{{ route('peserta-ujian.store', $ujian->id) }}" method="post">
                                         @csrf
                                         <div class="modal-body">
                                             <div class="row">
+
                                                 <div class="col-md-12">
                                                     <div class="form-group">
-                                                        <label for="example-text-input" class="form-control-label">Nama Ujian</label>
-                                                        <input type="text" class="form-control" name="nama_ujian" required>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-12">
-                                                    <div class="form-group">
-                                                        <label for="example-text-input" class="form-control-label">Mata Pelajaran</label>
-                                                        <select class="form-select" aria-label="Default select example" name="id_matpel" required>
-                                                            <option value="" selected>-- Pilih Mata Pelajaran --</option>
-                                                            @foreach($data_matpel as $matpel)
-                                                            <option value="{{$matpel->id}}" {{ old('id_matpel') == $matpel->id ? "selected" : "" }}>{{$matpel->nama_matpel}}</option>
+                                                        <label for="example-text-input" class="form-control-label">Siswa</label>
+                                                        <select class="form-select" aria-label="Default select example" name="id_siswa" required>
+                                                            <option value="" selected>-- Pilih Siswa--</option>
+                                                            @foreach($data_siswa as $siswa)
+                                                            <option value="{{$siswa->id}}" {{ old('id_siswa') == $siswa->id ? "selected" : "" }}>{{$siswa->nama}}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12">
                                                     <div class="form-group">
-                                                        <label for="example-text-input" class="form-control-label">Tanggal</label>
-                                                        <input type="datetime-local" class="form-control" name="tanggal" required>
+                                                        <label for="example-text-input" class="form-control-label">Nilai Ujian</label>
+                                                        <input type="number" class="form-control" name="nilai" required>
                                                     </div>
                                                 </div>
+
                                             </div>
                                         </div>
                                         <div class="modal-footer">
@@ -75,52 +56,47 @@
                     </div>
                 </div>
                 <div class="card-body px-0 pt-0 pb-2">
-                    @if($data_ujian->count() == 0)
+                    @if($data_peserta->count() == 0)
                     <hr class="horizontal dark">
-                    <div class="text-center mb-2">Data ujian tidak tersedia</div>
+                    <div class="text-center mb-2">Data peserta belum tersedia</div>
                     @else
                     <div class="table-responsive p-0">
                         <table class="table align-items-center mb-0">
                             <thead>
                                 <tr>
                                     <th class="text-uppercase text-dark text-xxs font-weight-bolder opacity-7 text-center">No</th>
-                                    <th class="text-uppercase text-dark text-xxs font-weight-bolder opacity-7 ps-2">Nama Ujian</th>
-                                    <th class="text-uppercase text-dark text-xxs font-weight-bolder opacity-7 ps-2">Tanggal</th>
-                                    <th class="text-uppercase text-dark text-xxs font-weight-bolder opacity-7 ps-2">Mata Pelajaran</th>
-                                    <th class="text-uppercase text-dark text-xxs font-weight-bolder opacity-7 ps-2">Lulus</th>
-                                    <th class="text-uppercase text-dark text-xxs font-weight-bolder opacity-7 ps-2">Jumlah Peserta</th>
+                                    <th class="text-uppercase text-dark text-xxs font-weight-bolder opacity-7 ps-2">Nama Siswa</th>
+                                    <th class="text-uppercase text-dark text-xxs font-weight-bolder opacity-7 ps-2">Nilai</th>
+                                    <th class="text-uppercase text-dark text-xxs font-weight-bolder opacity-7 ps-2">Status</th>
                                     <th class="text-dark opacity-7"></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php $no = 0; ?>
-                                @foreach($data_ujian as $ujian)
+                                @foreach($data_peserta as $peserta)
                                 <?php $no++; ?>
                                 <tr>
                                     <td>
                                         <p class="text-sm text-center mb-0">{{$no}}</p>
                                     </td>
                                     <td>
-                                        <p class="text-sm mb-0">{{$ujian->nama_ujian}}</p>
+                                        <p class="text-sm mb-0">{{$peserta->siswa->nama}}</p>
                                     </td>
                                     <td>
-                                        <p class="text-sm mb-0">{{$ujian->tanggal}}</p>
+                                        <p class="text-sm mb-0">{{$peserta->nilai}}</p>
                                     </td>
-                                    <td>
-                                        <p class="text-sm mb-0">{{$ujian->mata_pelajaran->nama_matpel}}</p>
-                                    </td>
-                                    <td>
-                                        <p class="text-sm mb-0">{{$ujian->count_peserta_lulus}} Siswa</p>
+                                    <td class="align-middle text-sm">
+                                        @if($peserta->nilai >= $peserta->ujian->mata_pelajaran->kkm)
+                                        <span class="badge badge-sm bg-gradient-success">lulus</span>
+                                        @else
+                                        <span class="badge badge-sm bg-gradient-warning">Tidak Lulus</span>
+                                            @endif
                                     </td>
 
-                                    <td>
-                                        <p class="text-sm mb-0">{{$ujian->peserta->count()}} Siswa</p>
-                                    </td>
 
                                     <td class="align-middle ms-auto text-center">
-                                        <a href="{{ route('peserta-ujian.index', $ujian->id) }}" class="btn btn-link text-primary px-3 mb-0">Lihat Peserta</a>
                                         <a href="#" class="btn btn-link text-danger text-gradient px-2 mb-0 btn-delete" title="Hapus" data-id="{{$ujian->id}}">
-                                            <form action="{{ route('ujian.destroy', $ujian->id) }}" method="post" id="delete{{$ujian->id}}">
+                                            <form action="/ujian/{{$ujian->id}}/peserta/{{$peserta->id}}" method="post" id="delete{{$ujian->id}}">
                                                 @csrf
                                                 @method('delete')
                                             </form>

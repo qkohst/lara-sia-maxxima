@@ -16,12 +16,12 @@ class CreatePesertasTable extends Migration
         Schema::create('pesertas', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('id_ujian')->unsigned();
-            $table->string('peserta', 20);
+            $table->unsignedInteger('id_siswa')->unsigned();
             $table->integer('nilai');
             $table->timestamps();
 
             $table->foreign('id_ujian')->references('id')->on('ujians');
-            $table->foreign('peserta')->references('nis')->on('siswas');
+            $table->foreign('id_siswa')->references('id')->on('siswas');
         });
     }
 
